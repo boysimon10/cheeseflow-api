@@ -1,6 +1,4 @@
-// src/app.module.ts
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -10,6 +8,8 @@ import { join } from 'path';
 import databaseConfig from './config/database.config';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AppResolver } from './app.resolver';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,9 +38,10 @@ import { AppResolver } from './app.resolver';
       sortSchema: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-    })
+    }),
+    UsersModule,
+    AuthModule
   ],
-  controllers: [AppController],
   providers: [AppService, AppResolver],
 })
 export class AppModule {}
