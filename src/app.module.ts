@@ -10,6 +10,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { AppResolver } from './app.resolver';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -36,11 +37,14 @@ import { AuthModule } from './auth/auth.module';
       driver: ApolloDriver,
       playground: false,
       sortSchema: true,
+      csrfPrevention: false,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      introspection:true
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    CategoriesModule
   ],
   providers: [AppService, AppResolver],
 })

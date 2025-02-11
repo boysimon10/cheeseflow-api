@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Category } from 'src/categories/entities/category.entity';
 
 @ObjectType()
 @Entity('users')
@@ -35,6 +36,6 @@ export class User {
     // @OneToMany(() => Transaction, transaction => transaction.user)
     // transactions: Transaction[];
 
-    // @OneToMany(() => Category, category => category.user)
-    // categories: Category[];
+    @OneToMany(() => Category, category => category.user)
+    categories: Category[];
 }

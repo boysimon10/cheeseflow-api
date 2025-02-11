@@ -2,6 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  color: String!
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  type: TransactionType!
+  updatedAt: DateTime!
+  user: User!
+  userId: Float!
+}
+
+input CreateCategoryInput {
+  color: String!
+  name: String!
+  type: TransactionType!
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -24,14 +41,22 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createCategory(createCategoryInput: CreateCategoryInput!, userId: Float!): Category!
   createUser(createUserInput: CreateUserInput!): User!
   login(loginInput: LoginUserInput!): LoginResponse!
 }
 
 type Query {
+  categories(userId: Float!): [Category!]!
+  category(id: Float!): Category!
   hello: String!
   user(id: Float!): User!
   users: [User!]!
+}
+
+enum TransactionType {
+  EXPENSE
+  INCOME
 }
 
 type User {
