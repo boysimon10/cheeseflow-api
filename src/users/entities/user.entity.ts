@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Category } from 'src/categories/entities/category.entity';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
 
 @ObjectType()
 @Entity('users')
@@ -32,9 +33,8 @@ export class User {
     @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    // Ajouter les relations
-    // @OneToMany(() => Transaction, transaction => transaction.user)
-    // transactions: Transaction[];
+    @OneToMany(() => Transaction, transaction => transaction.user)
+    transactions: Transaction[];
 
     @OneToMany(() => Category, category => category.user)
     categories: Category[];

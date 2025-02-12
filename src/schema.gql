@@ -41,13 +41,13 @@ input LoginUserInput {
 }
 
 type Mutation {
-  createCategory(createCategoryInput: CreateCategoryInput!, userId: Float!): Category!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createUser(createUserInput: CreateUserInput!): User!
   login(loginInput: LoginUserInput!): LoginResponse!
 }
 
 type Query {
-  categories(userId: Float!): [Category!]!
+  categories: [Category!]!
   category(id: Float!): Category!
   hello: String!
   user(id: Float!): User!

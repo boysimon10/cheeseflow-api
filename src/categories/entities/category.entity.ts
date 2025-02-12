@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { TransactionType } from 'src/enums/transaction-type.enum';
 import { User } from 'src/users/entities/user.entity';
-//import { Transaction } from 'src/transactions/entities/transaction.entity';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
 
 @ObjectType()
 @Entity('categories')
@@ -52,8 +52,6 @@ export class Category {
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  /*
   @OneToMany(() => Transaction, transaction => transaction.category)
   transactions: Transaction[];
-  */
 }

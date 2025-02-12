@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
@@ -12,15 +12,29 @@ export class CategoriesService {
 
     findAll(userId: number): Promise<Category[]> {
         return this.categoryRepository.find({
-        where: { userId },
-    });
+            where: { userId },
+        });
     }
 
-    findOne(id: number): Promise<Category> {
-        return this.categoryRepository.findOneOrFail({ where: { id } });
+    async findOne(id: number): Promise<Category> {
+        const category = await this.categoryRepository.findOne({ where: { id } });
+        if (!category) {
+            throw new NotFoundException(`Category with ID ${id} not found`);
+        }
+        return category;
     }
 
-    create(data: Partial<Category>): Promise<Category> {
+    async create(data: Partial<Category>): Promise<Category> {
+        const existingCategory = await this.categoryRepository.findOne({
+            where: {
+                    name: data.name,
+                    userId: data.userId
+                    }
+            });
+
+            if (existingCategory) {
+                throw new ConflictException(`A category with name "${data.name}" already exists for this user`);
+            }
         const category = this.categoryRepository.create(data);
         return this.categoryRepository.save(category);
     }
