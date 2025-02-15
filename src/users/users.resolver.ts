@@ -4,6 +4,7 @@ import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CurrentUser } from '../auth/current-user.decorator';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -14,15 +15,21 @@ export class UsersResolver {
         return this.usersService.create(createUserInput);
     }
 
-    @Query(() => [User], { name: 'users' })
+/*     @Query(() => [User], { name: 'users' })
     @UseGuards(JwtAuthGuard)
     findAll() {
         return this.usersService.findAll();
-    }
+    } */
 
-    @Query(() => User, { name: 'user' })
+/*     @Query(() => User, { name: 'user' })
     @UseGuards(JwtAuthGuard)
     findOne(@Args('id') id: number) {
         return this.usersService.findOne(id);
+    } */
+
+    @Query(() => User, { name: 'profile' })
+    @UseGuards(JwtAuthGuard)
+    async getProfile(@CurrentUser() user: { userId: number, email: string }) {
+        return this.usersService.findOne(user.userId);
     }
 }

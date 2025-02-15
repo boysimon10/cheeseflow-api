@@ -3,7 +3,6 @@ import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { Category } from 'src/categories/entities/category.entity';
 import { TransactionType } from 'src/enums/transaction-type.enum';
-import { CurrencyType } from 'src/enums/currency-type.enum';
 
 @ObjectType()
 @Entity('transactions')
@@ -30,14 +29,6 @@ export class Transaction {
         enum: TransactionType
     })
     type: TransactionType;
-
-    @Field(() => CurrencyType)
-    @Column({
-        type: 'enum',
-        enum: CurrencyType,
-        default: CurrencyType.XOF
-    })
-    currency: CurrencyType;
 
     @Field()
     @Column()

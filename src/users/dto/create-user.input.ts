@@ -1,5 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsOptional, IsEnum } from 'class-validator';
+import { CurrencyType } from 'src/enums/currency-type.enum';
 
 @InputType()
 export class CreateUserInput {
@@ -17,4 +18,9 @@ export class CreateUserInput {
     @Field()
     @MinLength(6)
     password: string;
+
+    @Field(() => CurrencyType)
+    @IsOptional()
+    @IsEnum(CurrencyType)
+    currency: CurrencyType = CurrencyType.XOF;
 }

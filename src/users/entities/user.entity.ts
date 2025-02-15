@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Category } from 'src/categories/entities/category.entity';
 import { Transaction } from 'src/transactions/entities/transaction.entity';
+import { CurrencyType } from 'src/enums/currency-type.enum';
 
 @ObjectType()
 @Entity('users')
@@ -24,6 +25,14 @@ export class User {
     
     @Column({select: false, length: 255 })
     password: string;
+
+    @Field(() => CurrencyType)
+    @Column({
+        type: 'enum',
+        enum: CurrencyType,
+        default: CurrencyType.XOF
+    })
+    currency: CurrencyType;
     
     @Field()
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

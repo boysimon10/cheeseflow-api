@@ -19,11 +19,53 @@ input CreateCategoryInput {
   type: TransactionType!
 }
 
+input CreateTransactionInput {
+  amount: Float!
+  categoryId: Int!
+  description: String!
+  type: TransactionType!
+}
+
 input CreateUserInput {
+  currency: CurrencyType! = XOF
   email: String!
   name: String!
   password: String!
   phone: String
+}
+
+"""Available currency types for transactions"""
+enum CurrencyType {
+  AED
+  AUD
+  BRL
+  CAD
+  CHF
+  CNY
+  DKK
+  EGP
+  EUR
+  GBP
+  GHS
+  HKD
+  INR
+  JPY
+  KES
+  KRW
+  MAD
+  MXN
+  NGN
+  NOK
+  NZD
+  RUB
+  SAR
+  SEK
+  SGD
+  TND
+  USD
+  XAF
+  XOF
+  ZAR
 }
 
 """
@@ -42,6 +84,7 @@ input LoginUserInput {
 
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   createUser(createUserInput: CreateUserInput!): User!
   login(loginInput: LoginUserInput!): LoginResponse!
 }
@@ -50,8 +93,19 @@ type Query {
   categories: [Category!]!
   category(id: Float!): Category!
   hello: String!
-  user(id: Float!): User!
-  users: [User!]!
+  profile: User!
+  transaction(id: Float!): Transaction!
+  transactions: [Transaction!]!
+}
+
+type Transaction {
+  amount: Float!
+  categoryId: Float!
+  date: DateTime!
+  description: String!
+  id: ID!
+  type: TransactionType!
+  userId: Float!
 }
 
 enum TransactionType {
@@ -61,6 +115,7 @@ enum TransactionType {
 
 type User {
   createdAt: DateTime!
+  currency: CurrencyType!
   email: String!
   id: ID!
   name: String!
