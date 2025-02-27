@@ -86,7 +86,11 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   createUser(createUserInput: CreateUserInput!): User!
+  deleteTransaction(id: Float!): Transaction!
   login(loginInput: LoginUserInput!): LoginResponse!
+  removeCategory(id: Float!): Category!
+  updateCategory(id: Float!, updateCategoryInput: CreateCategoryInput!): Category!
+  updateTransaction(createTransactionInput: CreateTransactionInput!, id: Float!): Transaction!
 }
 
 type Query {
@@ -95,17 +99,26 @@ type Query {
   hello: String!
   profile: User!
   transaction(id: Float!): Transaction!
-  transactions: [Transaction!]!
+  transactions(filters: TransactionFilterInput): [Transaction!]!
 }
 
 type Transaction {
   amount: Float!
   categoryId: Float!
+  createdAt: DateTime!
   date: DateTime!
   description: String!
   id: ID!
   type: TransactionType!
+  updatedAt: DateTime!
   userId: Float!
+}
+
+input TransactionFilterInput {
+  categoryId: Int
+  endDate: DateTime
+  startDate: DateTime
+  type: TransactionType
 }
 
 enum TransactionType {

@@ -35,4 +35,36 @@ export class CategoriesResolver {
             userId: user.userId,
         });
     }
+
+    @Mutation(() => Category)
+    async updateCategory(
+        @Args('id') id: number,
+        @Args('updateCategoryInput') updateCategoryInput: CreateCategoryInput,
+        @CurrentUser() user: any,
+    ) {
+        const category = await this.categoriesService.findOne(id);
+        if (!category) {
+            throw new Error('Category not found');
+        }
+
+        if (category.userId!== user.userId) {
+            throw new Error('Not authorized to update this category');
+        }
+
+        return this.categoriesService.update(id, updateCategoryInput);
+    }
+
+    @Mutation(() => Category)
+    async removeCategory(@Args('id') id: number, @CurrentUser() user: any) {
+        const category = await this.categoriesService.findOne(id);
+        if (!category) {
+            throw new Error('Category not found');
+        }
+
+        if (category.userId!== user.userId) {
+            throw new Error('Not authorized to delete this category');
+        }
+
+        return this.categoriesService.remove(id);
+    }
 }

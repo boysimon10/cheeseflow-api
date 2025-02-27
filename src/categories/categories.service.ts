@@ -38,4 +38,17 @@ export class CategoriesService {
         const category = this.categoryRepository.create(data);
         return this.categoryRepository.save(category);
     }
+
+    async update(id: number, data: Partial<Category>): Promise<Category> {
+        const category = await this.categoryRepository.findOne({ where: { id } });
+        if (!category) {
+            throw new NotFoundException(`Category with ID ${id} not found`);
+        }
+        this.categoryRepository.merge(category, data);
+        return this.categoryRepository.save(category);
+    }
+
+    async remove(id: number): Promise<void> {
+        await this.categoryRepository.delete(id);
+    }
 }
