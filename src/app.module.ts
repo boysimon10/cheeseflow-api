@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TransactionsModule } from './transactions/transactions.module'
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -46,7 +47,8 @@ import { TransactionsModule } from './transactions/transactions.module'
     UsersModule,
     AuthModule,
     CategoriesModule,
-    TransactionsModule
+    TransactionsModule,
+    StatisticsModule
   ],
   providers: [AppService, AppResolver],
 })

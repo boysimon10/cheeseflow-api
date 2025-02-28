@@ -13,6 +13,12 @@ type Category {
   userId: Float!
 }
 
+type CategoryExpense {
+  amount: Float!
+  categoryId: Float!
+  categoryName: String!
+}
+
 input CreateCategoryInput {
   color: String!
   name: String!
@@ -82,6 +88,13 @@ input LoginUserInput {
   password: String!
 }
 
+type MonthlyData {
+  balance: Float!
+  expenses: Float!
+  incomes: Float!
+  month: String!
+}
+
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
@@ -94,9 +107,14 @@ type Mutation {
 }
 
 type Query {
+  balance: Float!
   categories: [Category!]!
   category(id: Float!): Category!
+  expensesByCategory: [CategoryExpense!]!
   hello: String!
+  monthlyExpenses: Float!
+  monthlyHistory: [MonthlyData!]!
+  monthlyIncomes: Float!
   profile: User!
   transaction(id: Float!): Transaction!
   transactions(filters: TransactionFilterInput): [Transaction!]!
