@@ -107,7 +107,7 @@ query GetCategories {
   categories {
     id
     name
-    color
+    emoji
     type
     userId
     createdAt
@@ -122,7 +122,7 @@ query GetCategory($id: Float!) {
   category(id: $id) {
     id
     name
-    color
+    emoji
     type
     userId
     createdAt
@@ -137,7 +137,7 @@ query {
   category(id: 1) {
     id
     name
-    color
+    emoji
     type
     userId
     createdAt
@@ -153,7 +153,7 @@ mutation CreateCategory($createCategoryInput: CreateCategoryInput!) {
   createCategory(createCategoryInput: $createCategoryInput) {
     id
     name
-    color
+    emoji
     type
   }
 }
@@ -163,7 +163,7 @@ Variables :
 {
   "createCategoryInput": {
     "name": "string",
-    "color": "string",
+    "emoji": "string",
     "type": "EXPENSE | INCOME"
   }
 }
@@ -174,12 +174,12 @@ Variables :
 mutation {
   createCategory(createCategoryInput: {
     name: "Alimentation",
-    color: "#FF5733",
+    emoji: "📋",
     type: "EXPENSE"
   }) {
     id
     name
-    color
+    emoji
     type
   }
 }
@@ -192,7 +192,7 @@ mutation UpdateCategory($id: Float!, $updateCategoryInput: CreateCategoryInput!)
   updateCategory(id: $id, updateCategoryInput: $updateCategoryInput) {
     id
     name
-    color
+    emoji
     type
   }
 }
@@ -203,7 +203,7 @@ Variables :
   "id": 1,
   "updateCategoryInput": {
     "name": "string",
-    "color": "string",
+    "emoji": "string",
     "type": "EXPENSE | INCOME"
   }
 }
@@ -216,13 +216,13 @@ mutation {
     id: 1,
     updateCategoryInput: {
       name: "Alimentation modifiée",
-      color: "#33FF57",
+      emoji: "📋",
       type: "EXPENSE"
     }
   ) {
     id
     name
-    color
+    emoji
     type
   }
 }
