@@ -31,8 +31,8 @@ export class Category {
   type: TransactionType;
 
   @Field()
-  @Column({ length: 7 }) 
-  color: string;
+  @Column({ length: 8 }) 
+  emoji: string;
 
   @Field()
   @Column()

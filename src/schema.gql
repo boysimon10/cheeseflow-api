@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 type Category {
-  color: String!
   createdAt: DateTime!
+  emoji: String!
   id: ID!
   name: String!
   type: TransactionType!
@@ -20,7 +20,7 @@ type CategoryExpense {
 }
 
 input CreateCategoryInput {
-  color: String!
+  emoji: String!
   name: String!
   type: TransactionType!
 }

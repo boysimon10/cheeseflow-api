@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, IsEnum, IsHexColor, IsNotEmpty } from 'class-validator';
+import { IsString, IsEnum, IsHexColor, IsNotEmpty, Length } from 'class-validator';
 import { TransactionType } from 'src/enums/transaction-type.enum';
 
 @InputType()
@@ -14,6 +14,7 @@ export class CreateCategoryInput {
   type: TransactionType;
 
   @Field()
-  @IsHexColor()
-  color: string;
+  @IsString()
+  @Length(1, 8)
+  emoji: string;
 }
