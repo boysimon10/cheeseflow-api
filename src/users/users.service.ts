@@ -29,10 +29,10 @@ export class UsersService {
         return this.usersRepository.findOneOrFail({ where: { id } });
     }
 
-    findOneByEmail(email: string): Promise<User> {
-        return this.usersRepository.findOne({ 
+    async findOneByEmail(email: string) {
+        return this.usersRepository.findOne({
             where: { email },
-            select: ['id', 'email', 'password'] 
+            select: ['id', 'email', 'password', 'name', 'currency'] // Make sure all fields are selected
         });
     }
 }
