@@ -32,7 +32,7 @@ export class UsersService {
     async findOneByEmail(email: string) {
         return this.usersRepository.findOne({
             where: { email },
-            select: ['id', 'email', 'password', 'name', 'currency'] // Make sure all fields are selected
+            select: ['id', 'email', 'password', 'name', 'currency', 'phone']
         });
     }
 }
