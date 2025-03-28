@@ -7,7 +7,16 @@
 ```graphql
 mutation Login($loginInput: LoginUserInput!) {
   login(loginInput: $loginInput) {
-    access_token
+    access_token,
+    user{
+      id
+      name
+      email
+      phone
+      currency
+      createdAt
+      updatedAt
+    }
   }
 }
 ```
@@ -28,12 +37,19 @@ mutation {
     email: "user@example.com",
     password: "yourpassword123"
   }) {
-    access_token
+    access_token,
+    user {
+      id
+      name
+      email
+      phone
+      currency
+      createdAt
+      updatedAt
+    }
   }
 }
 ```
-
-## User Management
 
 ### Create User
 **Avec variables :**
@@ -70,8 +86,8 @@ mutation {
     name: "John Doe",
     email: "john.doe@example.com",
     password: "securepassword123",
-    phone: "+123456789",
-    currency: "XOF"
+    phone: "+123456789",  // Optional
+    currency: "XOF"       // Optional, defaults to XOF
   }) {
     id
     name
