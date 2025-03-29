@@ -285,6 +285,12 @@ query GetTransactions($filters: TransactionFilterInput) {
     date
     createdAt
     updatedAt
+    category {
+      id
+      name
+      emoji
+      type
+    }
   }
 }
 ```
@@ -320,6 +326,12 @@ query {
     date
     createdAt
     updatedAt
+    category {
+      id
+      name
+      emoji
+      type
+    }
   }
 }
 ```
@@ -338,6 +350,12 @@ query GetTransaction($id: Float!) {
     date
     createdAt
     updatedAt
+    category {
+      id
+      name
+      emoji
+      type
+    }
   }
 }
 ```
@@ -361,6 +379,12 @@ query {
     date
     createdAt
     updatedAt
+    category {
+      id
+      name
+      emoji
+      type
+    }
   }
 }
 ```
