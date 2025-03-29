@@ -136,6 +136,8 @@ type Transaction {
 input TransactionFilterInput {
   categoryId: Int
   endDate: DateTime
+  limit: Int
+  offset: Int
   startDate: DateTime
   type: TransactionType
 }

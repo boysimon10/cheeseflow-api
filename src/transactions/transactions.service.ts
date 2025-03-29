@@ -8,7 +8,9 @@ export interface TransactionFilterOptions {
     startDate?: Date;
     endDate?: Date;
     categoryId?: number;
-    type?: TransactionType
+    type?: TransactionType;
+    limit?: number;
+    offset?: number;
 }
 
 @Injectable()
@@ -46,7 +48,9 @@ export class TransactionsService {
         
         return this.transactionRepository.find({
             where,
-            order: { date: 'DESC' } // Trier par date décroissante par défaut
+            order: { date: 'DESC' }, // Trier par date décroissante par défaut
+            take: filters?.limit,
+            skip: filters?.offset
         });
     }
 
