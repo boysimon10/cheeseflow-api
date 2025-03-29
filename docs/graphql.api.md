@@ -295,7 +295,9 @@ Filters :
     "categoryId": "number (optional)",
     "startDate": "DateTime (optional)",
     "endDate": "DateTime (optional)",
-    "type": "EXPENSE | INCOME (optional)"
+    "type": "EXPENSE | INCOME (optional)",
+    "limit": "number (optional)",
+    "offset": "number (optional)"
   }
 }
 ```
