@@ -123,6 +123,7 @@ type Query {
 
 type Transaction {
   amount: Float!
+  category: Category
   categoryId: Float!
   createdAt: DateTime!
   date: DateTime!

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { TransactionsService, TransactionFilterOptions } from './transactions.service';
 import { Transaction } from './entities/Transaction.entity';
 import { CreateTransactionInput } from './dto/create-transaction.input';
@@ -7,6 +7,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { CategoriesService } from '../categories/categories.service';
 import { TransactionFilterInput } from '../transactions/dto/transaction-filter.input';
+import { Category } from '../categories/entities/category.entity';
 
 @Resolver(() => Transaction)
 @UseGuards(JwtAuthGuard)
@@ -15,6 +16,15 @@ export class TransactionsResolver {
         private readonly transactionsService: TransactionsService,
         private readonly categoriesService: CategoriesService,
     ) {}
+
+    // Ajouter un resolver de champ pour la relation category
+    @ResolveField(() => Category, { nullable: true })
+    async category(@Parent() transaction: Transaction) {
+        if (transaction.categoryId) {
+            return this.categoriesService.findOne(transaction.categoryId);
+        }
+        return null;
+    }
 
     @Query(() => [Transaction])
     transactions(

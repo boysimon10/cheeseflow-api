@@ -50,12 +50,16 @@ export class TransactionsService {
             where,
             order: { date: 'DESC' }, // Trier par date décroissante par défaut
             take: filters?.limit,
-            skip: filters?.offset
+            skip: filters?.offset,
+            relations: ['category'] // Ajouter cette ligne pour charger la relation avec la catégorie
         });
     }
 
     async findOne(id: number): Promise<Transaction> {
-        const transaction = await this.transactionRepository.findOne({ where: { id } });
+        const transaction = await this.transactionRepository.findOne({ 
+            where: { id },
+            relations: ['category'] // Ajouter cette ligne pour charger la relation avec la catégorie
+        });
         if (!transaction) {
             throw new NotFoundException(`Transaction with ID ${id} not found`);
         }
