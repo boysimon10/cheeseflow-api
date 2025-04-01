@@ -4,6 +4,9 @@ import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
+
+export interface UserWithoutPassword extends Omit<User, 'password'> {}
+
 @Injectable()
 export class AuthService {
     constructor(
@@ -11,7 +14,7 @@ export class AuthService {
         private jwtService: JwtService,
     ) {}
 
-    async validateUser(email: string, password: string): Promise<any> {
+    async validateUser(email: string, password: string): Promise<UserWithoutPassword | null> {
         const user = await this.usersService.findOneByEmail(email);
         if (user && await bcrypt.compare(password, user.password)) {
             const { password, ...result } = user;

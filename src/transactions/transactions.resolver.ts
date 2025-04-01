@@ -8,6 +8,7 @@ import { CurrentUser } from '../auth/current-user.decorator';
 import { CategoriesService } from '../categories/categories.service';
 import { TransactionFilterInput } from '../transactions/dto/transaction-filter.input';
 import { Category } from '../categories/entities/category.entity';
+import { JwtUser } from '../auth/jwt.type';
 
 @Resolver(() => Transaction)
 @UseGuards(JwtAuthGuard)
@@ -28,14 +29,14 @@ export class TransactionsResolver {
 
     @Query(() => [Transaction])
     transactions(
-        @CurrentUser() user: any,
+        @CurrentUser() user: JwtUser,
         @Args('filters', { nullable: true }) filters?: TransactionFilterInput
     ) {
         return this.transactionsService.findAll(user.userId, filters);
     }
 
     @Query(() => Transaction)
-    async transaction(@Args('id') id: number, @CurrentUser() user: any) {
+    async transaction(@Args('id') id: number, @CurrentUser() user: JwtUser) {
         const transaction = await this.transactionsService.findOne(id);
         if (transaction.userId !== user.userId) {
             throw new ForbiddenException('Not authorized to access this transaction');
@@ -46,7 +47,7 @@ export class TransactionsResolver {
     @Mutation(() => Transaction)
     async createTransaction(
         @Args('createTransactionInput') createTransactionInput: CreateTransactionInput,
-        @CurrentUser() user: any,
+        @CurrentUser() user: JwtUser,
     ) {
         const category = await this.categoriesService.findOne(createTransactionInput.categoryId);
         
@@ -68,7 +69,7 @@ export class TransactionsResolver {
     async updateTransaction(
         @Args('id') id: number,
         @Args('createTransactionInput') createTransactionInput: CreateTransactionInput,
-        @CurrentUser() user: any,
+        @CurrentUser() user: JwtUser,
     ) {
         const transaction = await this.transactionsService.findOne(id);
         if (!transaction) {
@@ -83,7 +84,7 @@ export class TransactionsResolver {
     }
     
     @Mutation(() => Transaction)
-    async deleteTransaction(@Args('id') id: number, @CurrentUser() user: any) {
+    async deleteTransaction(@Args('id') id: number, @CurrentUser() user: JwtUser) {
         const transaction = await this.transactionsService.findOne(id);
         if (!transaction) {
             throw new Error('Transaction not found');

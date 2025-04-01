@@ -5,6 +5,7 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { JwtUser } from '../auth/jwt.type';
 
 @Resolver(() => Category)
 @UseGuards(JwtAuthGuard)
@@ -12,12 +13,12 @@ export class CategoriesResolver {
     constructor(private readonly categoriesService: CategoriesService) {}
 
     @Query(() => [Category])
-    categories(@CurrentUser() user: any) {
+    categories(@CurrentUser() user: JwtUser) {
         return this.categoriesService.findAll(user.userId);
     }
 
     @Query(() => Category)
-    async category(@Args('id') id: number, @CurrentUser() user: any) {
+    async category(@Args('id') id: number, @CurrentUser() user: JwtUser) {
         const category = await this.categoriesService.findOne(id);
         if (category.userId !== user.userId) {
             throw new Error('Not authorized to access this category');
@@ -28,7 +29,7 @@ export class CategoriesResolver {
     @Mutation(() => Category)
     createCategory(
         @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
-        @CurrentUser() user: any,
+        @CurrentUser() user: JwtUser,
     ) {
         return this.categoriesService.create({
             ...createCategoryInput,
@@ -40,7 +41,7 @@ export class CategoriesResolver {
     async updateCategory(
         @Args('id') id: number,
         @Args('updateCategoryInput') updateCategoryInput: CreateCategoryInput,
-        @CurrentUser() user: any,
+        @CurrentUser() user: JwtUser,
     ) {
         const category = await this.categoriesService.findOne(id);
         if (!category) {
@@ -55,7 +56,7 @@ export class CategoriesResolver {
     }
 
     @Mutation(() => Category)
-    async removeCategory(@Args('id') id: number, @CurrentUser() user: any) {
+    async removeCategory(@Args('id') id: number, @CurrentUser() user: JwtUser) {
         const category = await this.categoriesService.findOne(id);
         if (!category) {
             throw new Error('Category not found');

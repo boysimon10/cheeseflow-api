@@ -13,7 +13,7 @@ import { AuthResolver } from './auth.resolver';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.JWT_SECRET,
-        signOptions: { expiresIn: '24h' },
+        signOptions: { expiresIn: '30d' },
       }),
     }),
   ],

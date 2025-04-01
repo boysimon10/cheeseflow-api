@@ -5,6 +5,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { JwtUser } from 'src/auth/jwt.type';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -29,7 +30,7 @@ export class UsersResolver {
 
     @Query(() => User, { name: 'profile' })
     @UseGuards(JwtAuthGuard)
-    async getProfile(@CurrentUser() user: { userId: number, email: string }) {
+    async getProfile(@CurrentUser() user: JwtUser) {
         return this.usersService.findOne(user.userId);
     }
 }
