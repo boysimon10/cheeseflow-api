@@ -550,6 +550,18 @@ query GetMonthlyHistory {
 }
 ```
 
+### Get Current Month History
+```graphql
+query GetCurrentMonthHistory {
+  currentMonthHistory {
+    month
+    expenses
+    incomes
+    balance
+  }
+}
+```
+
 ## Enums
 
 ### TransactionType
