@@ -74,6 +74,13 @@ enum CurrencyType {
   ZAR
 }
 
+type CurrentMonthData {
+  balance: Float!
+  expenses: Float!
+  incomes: Float!
+  month: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -111,6 +118,7 @@ type Query {
   balance: Float!
   categories: [Category!]!
   category(id: Float!): Category!
+  currentMonthHistory: CurrentMonthData!
   expensesByCategory: [CategoryExpense!]!
   hello: String!
   monthlyExpenses: Float!

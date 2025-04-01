@@ -26,3 +26,18 @@ export class MonthlyData {
     @Field(() => Float)
     balance: number;
 }
+
+@ObjectType()
+export class CurrentMonthData {
+    @Field()
+    month: string;
+
+    @Field(() => Float)
+    expenses: number;
+
+    @Field(() => Float)
+    incomes: number;
+
+    @Field(() => Float)
+    balance: number;
+}

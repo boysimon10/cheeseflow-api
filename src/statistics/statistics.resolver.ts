@@ -3,7 +3,7 @@ import { StatisticsService } from './statistics.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
-import { CategoryExpense, MonthlyData } from './dto/statistics.types';
+import { CategoryExpense, MonthlyData, CurrentMonthData } from './dto/statistics.types';
 import { Float } from '@nestjs/graphql';
 
 @Resolver()
@@ -34,5 +34,10 @@ export class StatisticsResolver {
     @Query(() => [MonthlyData])
     async monthlyHistory(@CurrentUser() user: any) {
         return this.statisticsService.getMonthlyHistory(user.userId);
+    }
+
+    @Query(() => CurrentMonthData)
+    async currentMonthHistory(@CurrentUser() user: any) {
+        return this.statisticsService.getCurrentMonthHistory(user.userId);
     }
 }

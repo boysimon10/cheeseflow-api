@@ -90,4 +90,35 @@ export class StatisticsService {
             .orderBy('month', 'DESC')
             .getRawMany();
     }
+
+    async getCurrentMonthHistory(userId: number) {
+        const result = await this.transactionRepository
+            .createQueryBuilder('transaction')
+            .where('transaction.userId = :userId', { userId })
+            .andWhere('EXTRACT(MONTH FROM transaction.date) = EXTRACT(MONTH FROM CURRENT_DATE)')
+            .andWhere('EXTRACT(YEAR FROM transaction.date) = EXTRACT(YEAR FROM CURRENT_DATE)')
+            .select([
+                'TO_CHAR(CURRENT_DATE, \'YYYY-MM\') as month',
+                `COALESCE(SUM(CASE WHEN transaction.type = '${TransactionType.EXPENSE}' THEN transaction.amount ELSE 0 END), 0) as expenses`,
+                `COALESCE(SUM(CASE WHEN transaction.type = '${TransactionType.INCOME}' THEN transaction.amount ELSE 0 END), 0) as incomes`,
+                `COALESCE(SUM(CASE
+                    WHEN transaction.type = '${TransactionType.INCOME}' THEN transaction.amount
+                    ELSE -transaction.amount
+                END), 0) as balance`
+            ])
+            .getRawOne();
+
+        if (!result) {
+            const currentDate = new Date();
+            const month = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+            return {
+                month,
+                expenses: 0,
+                incomes: 0,
+                balance: 0
+            };
+        }
+        
+        return result;
+    }
 }
