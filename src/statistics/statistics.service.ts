@@ -60,8 +60,8 @@ export class StatisticsService {
             .innerJoinAndSelect('transaction.category', 'category')
             .where('transaction.userId = :userId', { userId })
             .andWhere('transaction.type = :type', { type: TransactionType.EXPENSE })
-            .andWhere('EXTRACT(MONTH FROM transaction.date) = EXTRACT(MONTH FROM CURRENT_DATE)')
-            .andWhere('EXTRACT(YEAR FROM transaction.date) = EXTRACT(YEAR FROM CURRENT_DATE)')
+            //.andWhere('EXTRACT(MONTH FROM transaction.date) = EXTRACT(MONTH FROM CURRENT_DATE)')
+            //.andWhere('EXTRACT(YEAR FROM transaction.date) = EXTRACT(YEAR FROM CURRENT_DATE)')
             .select([
                 'CAST(category.id AS INTEGER) as "categoryId"',
                 'category.name as "categoryName"',
