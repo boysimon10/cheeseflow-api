@@ -28,6 +28,7 @@ input CreateCategoryInput {
 input CreateTransactionInput {
   amount: Float!
   categoryId: Int!
+  date: DateTime
   description: String!
   type: TransactionType!
 }

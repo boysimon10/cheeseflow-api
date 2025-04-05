@@ -39,7 +39,8 @@ export class Transaction {
     userId: number;
 
     @Field()
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    @Field()
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
   
     @Field()

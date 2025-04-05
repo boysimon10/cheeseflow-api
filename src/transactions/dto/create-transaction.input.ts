@@ -1,5 +1,5 @@
 import { InputType, Field, Int, Float } from '@nestjs/graphql';
-import { IsNotEmpty, IsNumber, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsEnum, IsDate, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { TransactionType } from 'src/enums/transaction-type.enum';
 
@@ -10,6 +10,12 @@ export class CreateTransactionInput {
     @Type(() => Number)
     @IsNumber()
     amount: number;
+
+    @Field({ nullable: true })
+    @IsOptional()
+    @Type(() => Date)
+    @IsDate()
+    date?: Date;
 
     @Field()
     @IsNotEmpty()

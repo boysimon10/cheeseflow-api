@@ -31,7 +31,7 @@ export class TransactionsService {
             } else if (filters.startDate) {
                 where.date = Between(filters.startDate, new Date());
             } else if (filters.endDate) {
-                // Utiliser une date ancienne comme début par défaut
+        
                 where.date = Between(new Date('1970-01-01'), filters.endDate);
             }
             
@@ -48,17 +48,17 @@ export class TransactionsService {
         
         return this.transactionRepository.find({
             where,
-            order: { date: 'DESC' }, // Trier par date décroissante par défaut
+            order: { date: 'DESC' },
             take: filters?.limit,
             skip: filters?.offset,
-            relations: ['category'] // Ajouter cette ligne pour charger la relation avec la catégorie
+            relations: ['category'] 
         });
     }
 
     async findOne(id: number): Promise<Transaction> {
         const transaction = await this.transactionRepository.findOne({ 
             where: { id },
-            relations: ['category'] // Ajouter cette ligne pour charger la relation avec la catégorie
+            relations: ['category'] 
         });
         if (!transaction) {
             throw new NotFoundException(`Transaction with ID ${id} not found`);
