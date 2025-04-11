@@ -1,8 +1,8 @@
 import { Query, Resolver } from '@nestjs/graphql';
 
-@Resolver('App') // Ajoutez un nom ici
+@Resolver('App') 
 export class AppResolver {
-  @Query(() => String, { name: 'hello' }) // Ajoutez un name explicite
+  @Query(() => String, { name: 'hello' }) 
   hello(): string {
     return 'Hello World!';
   }
